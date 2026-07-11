@@ -12,6 +12,6 @@ int main(int argc, char *argv[])
 
     MainWindow window;
     window.show();
-
+    cout << "Hello, World!" << endl;
     return app.exec();
 }
