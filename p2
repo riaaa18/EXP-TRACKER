@@ -1,171 +1,42 @@
-#include <iostream>
-#include <fstream>
-#include <algorithm>
+#include<iostream>
+#include<fstream>
+#include<string>
 using namespace std;
-
-struct Expense
+struct exp{
+    int week;
+    double food, transport, entertainment, utility;
+    char category[100][100];
+    double amount[100];
+}Expense[100];
+int main()
 {
-    string category;
-    double amount;
-};
-
-
-void saveToFile(Expense expenses[], int size)
-{
-    ofstream file("expenses.csv");
-
-    if (file.is_open())
+    int week;
+    char choice;
+   cout<<"Enter the week number: ";
+   cin>>week;
+   for(int i=0;i<week;i++)
+   {
+    cout<<"Food :";
+    cin>>Expense.food;
+    cout<<"Transport :";
+    cin>>Expense.transport;
+    cout<<"Entertainment :";
+    cin>>Expense.entertainment;
+    cout<<"Utility :";
+    cin>>Expense.utility;
+    cout<<"Do you want to add custom category? (y/n): ";
+    cin>>choice;
+    if (choice=='y'|| choice=='Y')
     {
-        file << "Category,Amount\n";
-
-        for (int i = 0; i < size; i++)
-        {
-            file << expenses[i].category << ","
-                 << expenses[i].amount << endl;
-        }
-
-        file.close();
-        cout << "\nExpenses saved successfully!\n";
+        cout<<"Enter the category name: ";
+        cin>>Expense.category[i];
+        cout<<"Enter the amount: ";
+        cin>>Expense.amount[i];
     }
     else
     {
-        cout << "File cannot be opened.\n";
+        cout<<"No custom category added."<<endl;
     }
-}
-
-
-int loadFromFile(Expense expenses[])
-{
-    ifstream file("expenses.csv");
-
-    int count = 0;
-
-    if (file.is_open())
-    {
-        string heading;
-
-        // Skip first line
-        getline(file, heading);
-
-        while (file >> expenses[count].category >> expenses[count].amount)
-        {
-            count++;
-        }
-
-        file.close();
-    }
-
-    return count;
-}
-
-
-void sortCategories(string categories[], int size)
-{
-    sort(categories, categories + size);
-}
-
-
-void displayCategories(string categories[], int size)
-{
-    sortCategories(categories, size);
-
-    cout << "\nAvailable Categories:\n";
-
-    for (int i = 0; i < size; i++)
-    {
-        cout << i + 1 << ". " << categories[i] << endl;
-    }
-}
-
-
-int main()
-{
-    string categories[20] = {
-        "Rent",
-        "Food",
-        "Transportation",
-        "Utilities",
-        "Entertainment"
-    };
-
-    int categoryCount = 5;
-
-
-    Expense expenses[100];
-
-    int expenseCount = 0;
-
-
-    // Load previous expenses
-    expenseCount = loadFromFile(expenses);
-
-
-    char choice;
-
-    cout << "Do you want to add a custom category? (y/n): ";
-    cin >> choice;
-
-
-    while (choice == 'y' || choice == 'Y')
-    {
-        cout << "Enter new category: ";
-        cin >> categories[categoryCount];
-
-        categoryCount++;
-
-        cout << "Add another category? (y/n): ";
-        cin >> choice;
-    }
-
-
-    int number;
-
-    cout << "\nHow many expenses do you want to add? ";
-    cin >> number;
-
-
-    for (int i = 0; i < number; i++)
-    {
-        displayCategories(categories, categoryCount);
-
-        int option;
-
-        cout << "\nSelect category number: ";
-        cin >> option;
-
-
-        cout << "Enter amount: ";
-        cin >> expenses[expenseCount].amount;
-
-
-        expenses[expenseCount].category = categories[option - 1];
-
-        expenseCount++;
-    }
-
-
-    double total = 0;
-
-
-    cout << "\n----- Expense Details -----\n";
-
-
-    for (int i = 0; i < expenseCount; i++)
-    {
-        cout << expenses[i].category 
-             << " : $" 
-             << expenses[i].amount 
-             << endl;
-
-        total = total + expenses[i].amount;
-    }
-
-
-    cout << "\nWeekly Total = $" << total << endl;
-
-
-    saveToFile(expenses, expenseCount);
-
 
     return 0;
 }
