@@ -1,0 +1,65 @@
+#include<iostream>
+#include<fstream>
+#include<string>
+using namespace std;
+
+struct exp
+{
+    int week;
+    double food, transport, entertainment, utility;
+    char category[100][100];
+    double amount[100];
+} Expense[100];
+
+int main()
+{
+    int week;
+    char choice;
+
+    cout << "Enter the number of weeks: ";
+    cin >> week;
+
+    ofstream fout("expenses.csv");
+
+    for(int i = 0; i < week; i++)
+    {
+        cout << endl<< " Week " << i + 1 << endl;
+
+        Expense[i].week = i + 1;
+
+        cout << "Food: ";
+        cin >> Expense[i].food;
+        fout << Expense[i].week << ",Food," << Expense[i].food << endl;
+
+        cout << "Transport: ";
+        cin >> Expense[i].transport;
+        fout << Expense[i].week << ",Transport," << Expense[i].transport << endl;
+
+        cout << "Entertainment: ";
+        cin >> Expense[i].entertainment;
+        fout << Expense[i].week << ",Entertainment," << Expense[i].entertainment << endl;
+
+        cout << "Utility: ";
+        cin >> Expense[i].utility;
+        fout << Expense[i].week << ",Utility," << Expense[i].utility << endl;
+int j = 0;
+        do
+        {
+            cout << "Do you want to add a custom category? (y/n): ";
+            cin >> choice;
+            if(choice == 'y' || choice == 'Y')
+            {
+                cout << "Category: ";
+                cin >> Expense[i].category[j];
+                cout << "Amount: ";
+                cin >> Expense[i].amount[j];
+                fout << Expense[i].week << ","
+                     << Expense[i].category[j] << ","
+                     << Expense[i].amount[j] << endl;
+                j++;
+            }
+        } while(choice == 'y' || choice == 'Y');
+    }
+    fout.close();
+    return 0;
+}
